@@ -1,0 +1,78 @@
+/* Archivo styles.css */
+.step-1 {
+    height: 28em;
+  }
+  
+  .step-2 {
+    height: 45rem;
+  }
+  
+  .step-3 {
+    height: 35rem;
+  }
+
+  .step-4 {
+    height: 50rem;
+  }
+
+  @media (max-width: 1024px) {
+    .step-1 {
+      height: 38rem;
+    }
+  
+    .step-2 {
+      height: 85rem;
+    }
+
+    .step-4 {
+      height: 60rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .step-1{
+      height: 55rem; 
+    }
+
+    .step-2 {
+      height: 68em;
+    }
+  
+    .step-2.method-a {
+      height: 95rem;
+    }
+    
+    .step-2.method-b {
+      height: 80rem;
+    }
+    
+    .step-2.method-c {
+      height: 75rem;
+    }
+    .step-2.method-d {
+      height: 75rem;
+    }
+    .step-3 {
+    height: 40rem;
+        }
+    .step-4 {
+      height: 80rem;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .step-1{
+      height: 55rem; 
+    }
+  
+    .step-2 {
+      height: 102rem;
+    }
+    .step-3 {
+    height: 40rem;
+        }
+    .step-4 {
+      height: 80rem;
+    }
+  }
+  

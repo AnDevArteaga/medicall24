@@ -1,0 +1,45 @@
+.animate-slide-in {
+    animation: slide-in 1s ease-out;
+  }
+  
+  .animate-in {
+    animation: in 1s ease-out;
+  }
+  
+  .animate-text {
+    animation: text 1s ease-out;
+  }
+  
+  @keyframes text {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes in {
+    0% {
+      opacity: 0;
+  
+    }
+    100% {
+      opacity: 1;
+  
+    }
+  }
+  
+  @keyframes slide-in {
+      0% {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }

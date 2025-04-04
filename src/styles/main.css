@@ -1,0 +1,36 @@
+
+.overflow {
+    overflow: hidden;
+}
+  .bexa {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .bexa::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("https://medicall24.com.co/wp-content/uploads/2024/12/fondo3.png");
+    background-size: cover;
+    background-position: center;
+    /* transform: scaleX(-1); */
+    opacity: 0.3;
+    z-index: -1;
+  }
+
+@media (max-width: 768px) {
+    .bexa::before {
+      background-image: url("https://medicall24.com.co/wp-content/uploads/2024/12/fondo3.png");
+      background-position: 27%;
+  
+    }
+  }
+
+
+  
+
+

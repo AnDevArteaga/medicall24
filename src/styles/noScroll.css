@@ -1,0 +1,5 @@
+/* Bloquea el scroll */
+.noScroll {
+    overflow: hidden !important;
+}
+  

@@ -1,0 +1,19 @@
+.loader-rotate {
+    border: 4px solid rgba(194, 14, 113, 0.98); 
+    border-top: 4px solid white; 
+    border-radius: 50%;
+    width: 24px; /* Ancho del círculo */
+    height: 24px; /* Alto del círculo */
+    animation: spin 3s linear infinite;
+  }
+  
+  /* Definición de la animación */
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
