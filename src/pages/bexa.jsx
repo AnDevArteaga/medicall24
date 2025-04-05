@@ -3,6 +3,7 @@ import MainContent from "../components/user/Persona/ExamenBexa/page/Main";
 import Footer from "../components/common/Footer";
 import PropTypes from "prop-types";
 import HandleTestimony from "../components/testimonies/handleTestimony"
+import Aliados from "../components/user/Persona/ExamenBexa/page/AliadosBexa"
 
 
 const Index = ( {productos, codigosXProductos} ) => {
@@ -12,8 +13,8 @@ const Index = ( {productos, codigosXProductos} ) => {
     <div className="flex flex-col min-h-screen">
       <Header />
         <MainContent codigosxproductos={codigosXProductos} productos={productos} />
+        <Aliados />
         <HandleTestimony />        
-           
             <Footer /> 
     </div>
   );

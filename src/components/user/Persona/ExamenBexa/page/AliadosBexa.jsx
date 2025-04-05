@@ -1,14 +1,12 @@
-import Header from "../components/common/Header";
-import Footer from "../components/common/Footer";
-import Aliados from "../components/user/Aliados/ListaAliados";
+import Aliados from "../../../Aliados/ListaAliados";
 import { useEffect, useState, lazy } from "react";
-import { getAliadosLista } from "../services/supabase/getAliados&Gestores";
-import { listInstitutionsById } from "../services/azure/institutions";
+import { getAliadosLista } from "../../../../../services/supabase/getAliados&Gestores";
+import { listInstitutionsById } from "../../../../../services/azure/institutions";
 // import { getListBexaAllies } from "../services/azure/citas";
-import { useAppointment } from "../contexts/agendCitas";
-import "../styles/noScroll.css";
+import { useAppointment } from "../../../../../contexts/agendCitas";
+import "../../../../../styles/noScroll.css";
 
-const Modal = lazy(() => import("../components/modals/agendCita/agendCita"));
+const Modal = lazy(() => import("../../../../modals/agendCita/agendCita"));
 
 const ListaAliados = () => {
     const { setAppointment, setCover, setInstitutions } = useAppointment();
@@ -32,10 +30,10 @@ const ListaAliados = () => {
         setCover(institutionsWithCover.find((item) => item.id_institucion === institutions.id_institucion).cover);
         setInstitutions(institutions);
         setIsOpen(true); // Abrir modal
-        
-            }
+
+    }
     useEffect(() => {
-    handleGetAliados()
+        handleGetAliados()
     }, []);
 
     const handleGetInstitutions = async () => {
@@ -61,36 +59,28 @@ const ListaAliados = () => {
             idProfessional: "",
             idTypeServices: 3,
             date: ""
-          });
-          setCover("");
-          setInstitutions({});
+        });
+        setCover("");
+        setInstitutions({});
     };
 
     useEffect(() => {
         // Agregar o quitar la clase `no-scroll` según el estado del modal
         if (isOpen) {
-          document.body.classList.add("noScroll");
+            document.body.classList.add("noScroll");
         } else {
-          document.body.classList.remove("noScroll");
+            document.body.classList.remove("noScroll");
         }
-    
+
         // Limpieza: Elimina la clase si el componente se desmonta
         return () => document.body.classList.remove("no-scroll");
-      }, [isOpen]);
+    }, [isOpen]);
 
     return (
-        <>
-            <header>
-                <Header />
-            </header>
-            <main>
-                <Aliados items={institutionsWithCover} onSelect={handleOnSelect} type={'page'} />
-                <Modal isOpen={isOpen} onClose={close} />
-                </main>
-            <footer>
-                <Footer />
-            </footer>
-        </>
+        <main>
+            <Aliados items={institutionsWithCover} onSelect={handleOnSelect} type={'carrousel'} />
+            <Modal isOpen={isOpen} onClose={close} />
+        </main>
     );
 };
 

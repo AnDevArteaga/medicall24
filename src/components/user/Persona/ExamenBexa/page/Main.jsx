@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "../../../../../styles/noScroll.css";
 import PropTypes from "prop-types";
 
-import { CheckCircle, ChevronRight, Info } from "lucide-react";
+import { CheckCircle, ChevronRight, Info, ChevronDown } from "lucide-react";
 
 import TermCondBexaPackage from "../../../../modals/TermAndConditions/TermCondBexaPackage";
 import TermCondBexaPackageNext from "../../../../modals/TermAndConditions/TermCondBexaPackageNext";
@@ -245,49 +245,76 @@ const MainContent = ({ codigosxproductos, productos }) => {
     </p>
   );
 
-  const AdditionalServices = () => (
-    <div className="space-y-3 md:space-y-2">
-      <p className="text-gray-700 text-sm md:text-2xl sm:text-base mb-2">
-        Beneficios que incluye:
-      </p>
-      <ServiceItem
-        icon={
-          <CheckCircle className="w-4 h-4 md:w-6 md:h-6 text-orange-500 group-hover:text-orange-600 transition-colors duration-200 flex-shrink-0" />
-        }
-        text="Valoración por médico general para establecer la condición de salud de la paciente."
-      />
-      <ServiceItem
-        icon={
-          <CheckCircle className="w-4 h-4 md:w-6 md:h-6 text-orange-500 group-hover:text-orange-600 transition-colors duration-200 flex-shrink-0" />
-        }
-        text="⁠La realización del examen en las dos mamas."
-      />
-      <ServiceItem
-        icon={
-          <CheckCircle className="w-4 h-4 md:w-6 md:h-6 text-orange-500 group-hover:text-orange-600 transition-colors duration-200 flex-shrink-0" />
-        }
-        text="El análisis clínico para interpretar el resultado del examen, identificar si hay masas anormales en las mamas, y prescribir estudios complementarios."
-      />
-      <ServiceItem
-        icon={
-          <CheckCircle className="w-4 h-4 md:w-6 md:h-6 text-orange-500 group-hover:text-orange-600 transition-colors duration-200 flex-shrink-0" />
-        }
-        text="⁠La educación para que las mujeres se realicen el autoexamen correctamente."
-      />
-      <ServiceItem
-        icon={
-          <CheckCircle className="w-4 h-4 md:w-6 md:h-6 text-orange-500 group-hover:text-orange-600 transition-colors duration-200 flex-shrink-0" />
-        }
-        text="⁠La historia clínica de la atención."
-      />
-      <ServiceItem
-        icon={
-          <CheckCircle className="w-4 h-4 md:w-6 md:h-6 text-orange-500 group-hover:text-orange-600 transition-colors duration-200 flex-shrink-0" />
-        }
-        text="⁠La entrega inmediata del resultado del examen."
-      />
+  const AdditionalServices = () => {
+    const [isOpen, setIsOpen] = useState(false);
+  
+    const toggleAccordion = () => {
+      setIsOpen(!isOpen);
+    };
+  
+    return (
+      <div className="overflow-hidden">
+      <button
+        onClick={toggleAccordion}
+        className="flex justify-start items-center w-full text-left transition-colors duration-300"
+      >
+        <p className="font-medium text-gray-700 text-sm md:text-xl sm:text-base">
+          Ver beneficios
+        </p>
+        <div className={`transform transition-transform duration-300 ease-in-out ${isOpen ? 'rotate-180' : 'rotate-0'}`}>
+          <ChevronDown className="w-7 h-7 text-pink-600" />
+        </div>
+      </button>
+
+      <div 
+        className={`
+          transition-all duration-300 ease-in-out 
+          origin-top 
+          ${isOpen ? 'max-h-96 opacity-100 scale-y-100' : 'max-h-0 opacity-0 scale-y-0'}
+        `}
+      >
+        <div className="p-4 space-y-3">
+          <ServiceItem
+            icon={
+              <CheckCircle className="w-4 h-4 md:w-6 md:h-6 text-orange-500 group-hover:text-orange-600 transition-colors duration-200 flex-shrink-0" />
+            }
+            text="Valoración por médico general para establecer la condición de salud de la paciente."
+          />
+          <ServiceItem
+            icon={
+              <CheckCircle className="w-4 h-4 md:w-6 md:h-6 text-orange-500 group-hover:text-orange-600 transition-colors duration-200 flex-shrink-0" />
+            }
+            text="⁠La realización del examen en las dos mamas."
+          />
+          <ServiceItem
+            icon={
+              <CheckCircle className="w-4 h-4 md:w-6 md:h-6 text-orange-500 group-hover:text-orange-600 transition-colors duration-200 flex-shrink-0" />
+            }
+            text="El análisis clínico para interpretar el resultado del examen, identificar si hay masas anormales en las mamas, y prescribir estudios complementarios."
+          />
+          <ServiceItem
+            icon={
+              <CheckCircle className="w-4 h-4 md:w-6 md:h-6 text-orange-500 group-hover:text-orange-600 transition-colors duration-200 flex-shrink-0" />
+            }
+            text="⁠La educación para que las mujeres se realicen el autoexamen correctamente."
+          />
+          <ServiceItem
+            icon={
+              <CheckCircle className="w-4 h-4 md:w-6 md:h-6 text-orange-500 group-hover:text-orange-600 transition-colors duration-200 flex-shrink-0" />
+            }
+            text="⁠La historia clínica de la atención."
+          />
+          <ServiceItem
+            icon={
+              <CheckCircle className="w-4 h-4 md:w-6 md:h-6 text-orange-500 group-hover:text-orange-600 transition-colors duration-200 flex-shrink-0" />
+            }
+            text="⁠La entrega inmediata del resultado del examen."
+          />
+        </div>
+      </div>
     </div>
-  );
+    );
+  };
 
   const ServiceItem = ({ icon, text }) => (
     <div className="flex items-start space-x-2 hover:translate-x-2 transition-transform duration-200 w-4/5 sm:w-full md:w-full">
@@ -308,11 +335,11 @@ const MainContent = ({ codigosxproductos, productos }) => {
           <div className="space-y-2">
             {/* Título */}
             <h2 className="text-4xl md:text-center md:text-3xl sm:text-4xl font-bold text-gray-600 leading-tight tracking-wide">
-              Examen BEXA para Detectar Masas en Mama
+              Examen de Tamizaje para Detectar Cáncer de Mama
             </h2>
             {/* Descripción */}
             <Eslogan
-              text="Sin dolor, sin radiación, con resultados inmediatos."
+              text="Estudio de última tecnología realizado con el dispositivo BEXA, sin dolor, sin radiación, con resultados inmediatos."
               value={1}
             />
           </div>
@@ -328,6 +355,7 @@ const MainContent = ({ codigosxproductos, productos }) => {
           </div>
 
           <div className="space-y-2">
+            {/* <Accordion /> */}
             {/* Nuevos servicios */}
             <AdditionalServices />
             {/* Precio */}
@@ -344,6 +372,11 @@ const MainContent = ({ codigosxproductos, productos }) => {
               >
                 Comprar
               </button>
+              <a href="/aliados" >
+              <button className="w-auto text-orange-500 underline text-lg hover:text-orange-600 hover:scale-105 font-semibold transition duration-300 services-bexa md:text-3xl">
+                Ver agenda
+              </button>
+            </a>
             </div>
             <div className="flex flex-col w-1/2 sm:w-full">
               {/* Términos y condiciones */}
@@ -368,11 +401,6 @@ const MainContent = ({ codigosxproductos, productos }) => {
             />
           </div>
           <div>
-            <a href="/aliados">
-              <button className="bg-pink-600 w-full mt-0 text-white px-32 py-3 rounded-lg text-lg font-semibold hover:bg-pink-700 transition-colors shadow-md hover:shadow-lg font-bold services-bexa text-sm md:text-3xl">
-                Ver agenda
-              </button>
-            </a>
           </div>
         </div>
       </section>
