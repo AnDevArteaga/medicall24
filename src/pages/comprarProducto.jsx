@@ -92,6 +92,7 @@ const StepWizard = () => {
   const [isModalOpenBilling, setIsModalOpenBilling] = useState(false);
   const [methodClass, setMethodClass] = useState("");
   const [selectedMethod, setSelectedMethod] = useState(null);
+  const [statusCodeAutorizationGeneralData, setStatusCodeAutorizationGeneralData] = useState(null);
 
 
   const Finally = lazy(() =>
@@ -109,6 +110,16 @@ const StepWizard = () => {
   const getDepartamentos = (data) => {
     setDepartamentos(data);
   };
+
+
+  useEffect(() => {
+    statusCodeAutorizationGeneral()
+  }, [statusCodeAutorizationGeneralData]);
+
+  const statusCodeAutorizationGeneral = (statusCodeAutorization) => {
+    setStatusCodeAutorizationGeneralData(statusCodeAutorization);
+  };
+
 
   const getMunicipios = (data) => {
     if (aliados.length === 1) {
@@ -354,6 +365,11 @@ const StepWizard = () => {
         formData.phoneNumber && localFormData.phone && localFormData.address && localFormData.departamento &&
         localFormData.municipio && phoneNumberValid
       );
+    }
+
+    if (type === "MEDDIPAY") {
+      return ( formData.meddipayAuthorization && localFormData.address && localFormData.departamento &&
+        localFormData.municipio && localFormData.phone && statusCodeAutorizationGeneralData === 'valid' );
     }
 
     // Agregar validaciones para otros tipos si es necesario
@@ -872,9 +888,10 @@ const StepWizard = () => {
   useEffect(() => {
     if (currentStep === 2) {
       if (selectedMethod === "CARD") setMethodClass("method-a");
-      else if (selectedMethod === "PSE") setMethodClass("method-b");
+      else if (selectedMethod === "PSE" || selectedMethod === "MEDDIPAY") setMethodClass("method-b");
       else if (selectedMethod === "BANCOLOMBIA_TRANSFER") setMethodClass("method-c");
       else if (selectedMethod === "NEQUI") setMethodClass("method-d");
+
       else setMethodClass(""); // Si no hay método seleccionado
     } else {
       setMethodClass(""); // Resetear si no estamos en step 2
@@ -978,6 +995,7 @@ const StepWizard = () => {
                   openAlertEmailModal={handleAlertEmail}
                   phoneNumberValid={validatePhoneNumber}
                   onMethodChangeProps={handleMethodChange}
+                  statusCodeAutorizationGeneral={statusCodeAutorizationGeneral}
                 />
               </div>
               {/* Paso 3 */}

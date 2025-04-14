@@ -4,11 +4,7 @@ import video from "../../../../assets/telemedicina.mp4";
 const Principal = () => {
   return (
     <div className="flex flex-row items-center min-h-screen md:flex-col sm:flex-col bg-white px-0 py-4" // style={{
-      //   backgroundImage:
-      //     "url('https://medicall24.com.co/wp-content/uploads/2025/01/fondoPLanesInicio.png')",
-      //   backgroundSize: "cover",
-      //   backgroundPositionY: "70%",
-      // }}
+
     >
       <div className="relative w-full h-screen md:h-1/2 md:mt-24 sm:h-1/2">
         {/* Contenedor que define la altura visible del video */}

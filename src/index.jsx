@@ -10,6 +10,8 @@ import AnalyticsRoute from "./analytics/analyticsRoute.js"
 import { useClasificadorProductos } from "./hooks/useClasifiedProducts.js";
 import { PlanProvider } from "./contexts/empresas/simulatedPlanContext.jsx";
 import { AppointmentProvider } from "./contexts/agendCitas.jsx";
+import { Toaster } from "react-hot-toast";
+
 
 const App = () => {
   const [productos, setProductos] = useState([]);
@@ -49,6 +51,26 @@ const App = () => {
       <PlanProvider>
       <Router>
         <AnalyticsRoute />
+        <Toaster position="bottom-right" reverseOrder={false}  toastOptions={{
+    // Estilo general
+    style: {
+      fontSize: "18px",
+      borderRadius: "8px",
+      padding: "12px 16px",
+    },
+    success: {
+      style: {
+        background: "#19b424",
+        color: "#fff",
+      },
+    },
+    error: {
+      style: {
+        background: "#FEE2E2",
+        color: "#991B1B",
+      },
+    },
+  }} />
         <AppRoutes codigosXProductos={codigosXProductos} productosClasificados={productosClasificados} />
       </Router>
       </PlanProvider>

@@ -6,7 +6,7 @@ import { useUserData } from "../../hooks/useStepTwo/useUserData";
 
 import { FileText } from "lucide-react";
 
-const StepTwo = ({ payload, getDepartamentos, numberValid, openModal, openAlertEmailModal, phoneNumberValid, onMethodChangeProps }) => {
+const StepTwo = ({ payload, getDepartamentos, numberValid, openModal, openAlertEmailModal, phoneNumberValid, onMethodChangeProps, statusCodeAutorizationGeneral  }) => {
   const { departaments, municipios, fetchMunicipios, typeIds } = useFetchData(
     getDepartamentos,
   );
@@ -20,8 +20,11 @@ const StepTwo = ({ payload, getDepartamentos, numberValid, openModal, openAlertE
     dataVerified,
     fullName,
     fullLastName,
-    validateDomainEmail
-  } = useUserData(payload, departaments, fetchMunicipios, openAlertEmailModal);
+    validateDomainEmail,
+    validateCodeAutorization,
+    statusCodeAutorization,
+    setStatusCodeAutorization
+  } = useUserData(payload, departaments, fetchMunicipios, openAlertEmailModal, statusCodeAutorizationGeneral);
 
   return (
     <div className="bg-white rounded-lg p-6 sm:p-2 w-full grid grid-cols-2 sm:grid-cols-1 md:grid-cols-1 gap-6">
@@ -313,6 +316,9 @@ const StepTwo = ({ payload, getDepartamentos, numberValid, openModal, openAlertE
           numberValid={numberValid}
           phoneNumberValid={phoneNumberValid}
           onMethodChangeProps={onMethodChangeProps}
+          validateCodeAutorization={validateCodeAutorization}
+          statusCodeAutorization={statusCodeAutorization}
+          setStatusCodeAutorization={setStatusCodeAutorization}
         />
       </div>
     </div>

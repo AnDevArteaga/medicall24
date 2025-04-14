@@ -12,6 +12,9 @@ import RestrictedAccessTerm from "../components/NotFound/RestrictedAccessTerm.js
 import SendEmail from "../pages/sendEmail.jsx";
 import PasosBexa from "../pages/pasosBexa.jsx";
 import PruebaPage from "../pages/PruebaPage.jsx";
+import Login from "../pages/login.jsx";
+import ProtectedRoute from "../pages/protectedRoute.jsx";
+import Panel from "../pages/creditList.jsx";
 
 
 
@@ -41,6 +44,8 @@ const AppRoutes = ({ codigosXProductos, productosClasificados }) => {
         element={<RestrictedAccessTerm />}
       />
       <Route path="/pasos-bexa/:id_aliado" element={<PasosBexa />} />
+      <Route path="/iniciar-sesion" element={<Login />} />
+      <Route path="/panel" element={<ProtectedRoute><Panel /></ProtectedRoute>} />
     </Routes>
   );
 };

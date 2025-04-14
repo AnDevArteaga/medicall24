@@ -3,13 +3,24 @@ import ban from "../../assets/SVG/Ban.svg";
 import visa from "../../assets/SVG/visa.svg";
 import mastercard from "../../assets/SVG/mastercard.svg";
 import nequi from "../../assets/SVG/nequi.svg";
+import meddipay from "../../assets/SVG/meddipay-logo.svg";
 
 import { usePaymentForms } from "../../hooks/usePaymentForm";
 
-import { LoaderCircle } from "lucide-react";
+import { CheckCircle, LoaderCircle, XCircle } from "lucide-react";
 import PropTypes from "prop-types";
 
-const PaymentForm = ({ onFormDataChange, numberValid, phoneNumberValid, onMethodChangeProps }) => {
+const PaymentForm = (
+  {
+    onFormDataChange,
+    numberValid,
+    phoneNumberValid,
+    onMethodChangeProps,
+    validateCodeAutorization,
+    statusCodeAutorization,
+    setStatusCodeAutorization
+  },
+) => {
   const {
     selectedMethod,
     bankPse,
@@ -20,7 +31,15 @@ const PaymentForm = ({ onFormDataChange, numberValid, phoneNumberValid, onMethod
     error,
     loading,
     validateCardNumber,
-  } = usePaymentForms(onFormDataChange, numberValid, phoneNumberValid, onMethodChangeProps);
+    handleValidateCodeAutorization,
+  } = usePaymentForms(
+    onFormDataChange,
+    numberValid,
+    phoneNumberValid,
+    onMethodChangeProps,
+    validateCodeAutorization,
+    setStatusCodeAutorization
+  );
 
   return (
     <div className="w-full mx-auto flex flex-col">
@@ -31,49 +50,58 @@ const PaymentForm = ({ onFormDataChange, numberValid, phoneNumberValid, onMethod
       >
         Selecciona un Método de Pago
       </h2>
-      <div className={`grid grid-cols-2 p-1 sm:grid-cols-2 w-full place-items-center rounded-lg mb-2`}>
-        {methods.map((method) => (
-    <div key={method.id} className="w-full">
-
-<button
-        onClick={() => onMethodChange(method.id)}
-        className={`flex flex-col items-center justify-center w-full h-20 transition-all duration-100 ease-in-out group rounded-xl
-          ${selectedMethod === method.id ? method.activeColor : ""}
-        `}
+      <div
+        className={`grid grid-cols-2 p-1 sm:grid-cols-2 w-full gap-2 place-items-center rounded-lg mb-2`}
       >
-            <div className="mb-2">
-              <div className="flex items-center justify-center">
-                {method.id === "CARD" && (
-                  <img src={visa} alt="card" className="w-10 h-10" />
+        {methods.map((method) => (
+          <div key={method.id} className="w-full">
+            <button
+              onClick={() => onMethodChange(method.id)}
+              className={`flex flex-col items-center justify-center w-full h-20 transition-all duration-100 ease-in-out group rounded-xl
+    ${
+                selectedMethod === ""
+                  ? "border-2 border-pink-600"
+                  : selectedMethod === method.id
+                  ? "bg-white border-2 border-pink-600"
+                  : "border-none"
+              }
+  `}
+            >
+              <div className="mb-2">
+                <div className="flex items-center justify-center">
+                  {method.id === "CARD" && (
+                    <img src={visa} alt="card" className="w-10 h-10" />
+                  )}
+                  {method.id === "CARD" && (
+                    <img src={mastercard} alt="card" className="w-10 h-10" />
+                  )}
+                </div>
+                {method.id === "PSE" && (
+                  <img src={pse} alt="card" className="w-10 h-10" />
                 )}
-                {method.id === "CARD" && (
-                  <img src={mastercard} alt="card" className="w-10 h-10" />
+                {method.id === "BANCOLOMBIA_TRANSFER" && (
+                  <img src={ban} alt="card" className="w-10 h-10" />
+                )}
+                {method.id === "NEQUI" && (
+                  <img src={nequi} alt="card" className="w-10 h-10" />
+                )}
+                {method.id === "MEDDIPAY" && (
+                  <img src={meddipay} alt="card" className="w-20 h-auto" />
                 )}
               </div>
-              {method.id === "PSE" && (
-                <img src={pse} alt="card" className="w-10 h-10" />
-              )}
-              {method.id === "BANCOLOMBIA_TRANSFER" && (
-                <img src={ban} alt="card" className="w-10 h-10" />
-              )}
-              {method.id === "NEQUI" && (
-                <img src={nequi} alt="card" className="w-10 h-10" />
-              )}
-            </div>
-            <span
-              className={`
+              <span
+                className={`
             text-center font-semibold text-xs
             ${selectedMethod === method.id ? method.textColor : "text-gray-500"}
             group-hover:text-opacity-100
           `}
-            >
-              {method.label}
-            </span>
-          </button>
-        </div>        
+              >
+                {method.label}
+              </span>
+            </button>
+          </div>
         ))}
       </div>
-
 
       <div
         className="flex-grow p-4 rounded-lg overflow-y-auto"
@@ -350,23 +378,92 @@ const PaymentForm = ({ onFormDataChange, numberValid, phoneNumberValid, onMethod
                   placeholder=""
                   className="w-full px-4 py-2 border-2 disabled:text-gray-600 rounded-lg focus:ring-2 focus:ring-pink-600 focus:outline-none text-sm hover:shadow-md transition-all disabled:bg-gray-2000"
                   onChange={(e) => {
-                    const value = e.target.value.replace(/\D/g, ""); 
+                    const value = e.target.value.replace(/\D/g, "");
                     handleInputChange("phoneNumber", value);
                   }}
                   value={formValues.phoneNumber || ""}
-
                   autoComplete="off"
                   autoCorrect="off"
                   maxLength={10}
                 />
-                    {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
+                {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
                 {" "}
                 {/* Mensaje de error */}
               </div>
             </form>
           </div>
         )}
+        {selectedMethod === "MEDDIPAY" && (
+          <div className="animate-fade-in">
+            <h3 className="text-base font-bold mb-8 text-gray-700">
+              Pago con Meddipay
+            </h3>
+            <div className="flex flex-col items-center justify-center mb-4">
+              <a
+                href="https://www.meddipay.com.co/"
+                target="_blank"
+                className="bg-pink-600 w-2/3 mb-4 text-white px-8 py-3 sm:px-2 rounded-lg text-lg font-semibold hover:bg-pink-700 transition-colors shadow-md hover:shadow-lg font-bold services-bexa text-sm md:text-3xl text-center"
+              >
+                <button>
+                  Solicita tu cupo
+                </button>
+              </a>
+            </div>
+            <div className="space-y-4">
+              <div className="flex flex-col">
+                <label
+                  htmlFor="meddipayAuthorization"
+                  className="block font-medium mb-2 text-sm text-gray-700"
+                >
+                  Ingresa Numero de autorización
+                </label>
+                <div className="w-full flex justify-between gap-2">
+                  <input
+                    type="text"
+                    id="meddipayAuthorization"
+                    placeholder=""
+                    className="w-full px-4 py-2 border-2 disabled:text-gray-600 rounded-lg focus:ring-2 focus:ring-pink-600 focus:outline-none text-sm hover:shadow-md transition-all disabled:bg-gray-2000"
+                    onChange={(e) => {
+                      handleInputChange(
+                        "meddipayAuthorization",
+                        e.target.value,
+                      );
+                    }}
+                    value={formValues.meddipayAuthorization || ""}
+                    autoComplete="off"
+                    autoCorrect="off"
+                  />
+                  <button
+                    className="bg-pink-600 text-white px-4 rounded-lg shadow-md hover:bg-pink-700 transition-all"
+                    onClick={handleValidateCodeAutorization}
+                  >
+                    Validar
+                  </button>
+                </div>
 
+                {statusCodeAutorization === "valid"
+                  ? (
+                    <div className="flex flex-row mt-2">
+                      <CheckCircle className="text-green-600 w-4 mr-2" />
+                      <p className="text-green-600 text-sm mt-1">
+                        Código válido
+                      </p>
+                    </div>
+                  )
+                  : statusCodeAutorization === "invalid" && (
+                    <div className="flex flex-row mt-2">
+                      <XCircle className="text-red-600 w-4 mr-2" />
+                      <p className="text-red-600 text-sm mt-1">
+                        Código inválido
+                      </p>
+                    </div>
+                  )
+                
+                  }
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

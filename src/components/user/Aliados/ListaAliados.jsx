@@ -40,7 +40,7 @@ const ReactItemCarousel = ({ items, onSelect, type = "page" }) => {
   const renderCard = (item, index) => (
     <div
       key={index}
-      className="bg-gray-200 w-full h-[26rem] rounded-xl flex flex-col items-center shadow-lg space-y-8 mx-auto"
+      className="bg-gray-200 w-full h-[26rem] sm:h-auto rounded-xl flex flex-col items-center shadow-lg space-y-8 mx-auto"
       style={{ maxWidth: "350px" }}
     >
       <div className="w-full h-[12rem] sm:h-[12rem] relative overflow-hidden rounded-t-xl">
@@ -81,7 +81,7 @@ const ReactItemCarousel = ({ items, onSelect, type = "page" }) => {
   const CustomButtonGroup = ({ next, previous }) => {
     return (
       <div className="absolute w-full flex justify-between top-1/2 transform -translate-y-1/2 px-2">
-        <button
+        {/* <button
           onClick={previous}
           className={`p-2 rounded-full bg-white shadow-md ${
             currentSlide === 0 ? "opacity-50" : "hover:bg-gray-100"
@@ -98,7 +98,7 @@ const ReactItemCarousel = ({ items, onSelect, type = "page" }) => {
           disabled={currentSlide >= totalSlides - 1}
         >
           <ChevronRight className="text-gray-800" size={24} />
-        </button>
+        </button> */}
       </div>
     );
   };
@@ -115,7 +115,7 @@ const ReactItemCarousel = ({ items, onSelect, type = "page" }) => {
           customTransition="transform 500ms ease-in-out"
           transitionDuration={500}
           containerClass="carousel-container"
-          arrows={false}
+          arrows={true}
           customButtonGroup={<CustomButtonGroup />}
           renderButtonGroupOutside={true}
           itemClass="px-2 py-4 flex justify-center"
@@ -132,7 +132,7 @@ const ReactItemCarousel = ({ items, onSelect, type = "page" }) => {
   );
 
   return (
-    <div className="p-8 sm:p-2 bg-gradient-to-b from-gray-100 to-pink-200 rounded-lg shadow-md min-h-screen flex items-center flex-col space-y-12">
+    <div className="p-8 sm:p-2 bg-gradient-to-b from-gray-100 to-pink-200 rounded-lg shadow-md min-h-auto flex items-center flex-col space-y-12">
       <div className="text-center space-y-2">
         <div className="flex justify-center items-center sm:flex-col space-x-4 sm:space-x-0">
           <Handshake className="text-pink-600" size={36} />

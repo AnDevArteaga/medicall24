@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { loadBankPse } from "../services/azure/payment";
 
-export const usePaymentForms = (onFormDataChange, numberValid, phoneNumberValid, onMethodChangeProps) => {
+export const usePaymentForms = (onFormDataChange, numberValid, phoneNumberValid, onMethodChangeProps, validateCodeAutorization, setStatusCodeAutorization) => {
   const [selectedMethod, setSelectedMethod] = useState("");
   const [bankPse, setBankPse] = useState([]);
   
@@ -33,42 +33,50 @@ export const usePaymentForms = (onFormDataChange, numberValid, phoneNumberValid,
       id: "CARD",
       // icon: <CreditCard className="w-12 h-12 text-pink-500" />,
       label: "Tarjeta de crédito\no débito",
-      activeColor: "bg-white border",
+      activeColor: "bg-white border-2 border-pink-600",
       textColor: "text-gray-700",
     },
     {
       id: "PSE",
       // icon: <Landmark className="w-12 h-12 text-blue-500" />,
       label: "PSE",
-      activeColor: "bg-white border",
+      activeColor: "bg-white border-2 border-pink-600",
       textColor: "text-gray-700",
     },
     {
       id: "BANCOLOMBIA_TRANSFER",
       // icon: <BanknotesIcon className="w-12 h-12 text-yellow-500" />,
       label: "Bancolombia",
-      activeColor: "bg-white border",
+      activeColor: "bg-white border-2 border-pink-600",
       textColor: "text-gray-700",
     },
     {
       id: "NEQUI",
       label: "Nequi",
-      activeColor: "bg-white border",
+      activeColor: "bg-white border-2 border-pink-600 ",
+      textColor: "text-gray-700",
+    },
+    {
+      id: "MEDDIPAY",
+      label: "Meddipay",
+      activeColor: "bg-white border-2 border-pink-600 ",
       textColor: "text-gray-700",
     },
   ];
 
     // Maneja el cambio de método de pago
     const onMethodChange = (method) => {
+      setStatusCodeAutorization("");
+
       setSelectedMethod(method);
       handleMethodChange(method);
-  
       const resetData = {
         type: method,
         ...(method === "CARD" && {
           financialInstitutionCode: "0",
           userType: "PERSON",
           phoneNumber: "",
+          meddipayAuthorization: "",
         }),
         ...(method === "PSE" && {
           number: "",
@@ -80,6 +88,7 @@ export const usePaymentForms = (onFormDataChange, numberValid, phoneNumberValid,
           phoneNumber: "",
           userType: "",
           financialInstitutionCode: "0",
+          meddipayAuthorization: "",
         }),
         ...(method === "BANCOLOMBIA_TRANSFER" && {
           financialInstitutionCode: "0",
@@ -91,6 +100,7 @@ export const usePaymentForms = (onFormDataChange, numberValid, phoneNumberValid,
           installments: "0",
           phoneNumber: "",
           cardHolder: "",
+          meddipayAuthorization: "",
         }),
         ...(method === "NEQUI" && {
           number: "",
@@ -101,6 +111,7 @@ export const usePaymentForms = (onFormDataChange, numberValid, phoneNumberValid,
           installments: "0",
           financialInstitutionCode: "0",
           userType: "PERSON",
+          meddipayAuthorization: "",
         }),
       };
   
@@ -124,6 +135,7 @@ export const usePaymentForms = (onFormDataChange, numberValid, phoneNumberValid,
         phoneNumber: "",
         userType: "PERSON",
         financialInstitutionCode: "0",
+        meddipayAuthorization: "",
       };
     
       const [formValues, setFormValues] = useState(baseTemplate); // Almacena valores del formulario
@@ -180,8 +192,11 @@ export const usePaymentForms = (onFormDataChange, numberValid, phoneNumberValid,
           return updatedData; // Devuelve el objeto actualizado para actualizar el estado
         });
       };
-    
+    const handleValidateCodeAutorization = () => {
+      console.log("validateCodeAutorization");
+          validateCodeAutorization(formValues.meddipayAuthorization);
+        };
     
 
-  return { selectedMethod, bankPse, methods, onMethodChange, formValues, handleInputChange, error, loading, validateCardNumber };
+  return { selectedMethod, bankPse, methods, onMethodChange, formValues, handleInputChange, error, loading, validateCardNumber, handleValidateCodeAutorization };
 };

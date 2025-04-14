@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setLocalFormData } from "../../store/slices/dataAddSlice";
 import { setFormData } from "../../store/slices/formDataSlice";
+import { validarCodigoAutorizacion } from "../../services/supabase/saveDataCredit";
 
 
-export const useUserData = (payload, departaments, fetchMunicipios, openAlertEmailModal) => {
+export const useUserData = (payload, departaments, fetchMunicipios, openAlertEmailModal, statusCodeAutorizationGeneral) => {
   const dispatch = useDispatch();
   const [formErrors, setFormErrors] = useState({
     email: "",
@@ -16,7 +17,7 @@ export const useUserData = (payload, departaments, fetchMunicipios, openAlertEma
     departamento: "",
     municipio: "",
   });
-
+  const [statusCodeAutorization, setStatusCodeAutorization] = useState(null);
   const [dataVerified, setDataVerified] = useState({});
 
   const errors = {
@@ -231,5 +232,18 @@ export const useUserData = (payload, departaments, fetchMunicipios, openAlertEma
     dispatch(setFormData(updatedData)); // Enviar los datos actualizados al padre
   };
 
-  return { localFormData, handleChange, onFormDataChange, formErrors, validateEmail, enableField, errors, dataVerified, fullName, fullLastName, validateDomainEmail };
+  const validateCodeAutorization = async(code) => {
+    console.log("code", code);
+    console.log("id", payload.user.identification);
+    const isValid = await validarCodigoAutorizacion(code, payload.user.identification);
+    console.log("isValid", isValid);
+    if (isValid) {
+      setStatusCodeAutorization('valid');
+    } else {
+      setStatusCodeAutorization('invalid');
+    }
+    statusCodeAutorizationGeneral(statusCodeAutorization)
+  }
+
+  return { localFormData, handleChange, onFormDataChange, formErrors, validateEmail, enableField, errors, dataVerified, fullName, fullLastName, validateDomainEmail, validateCodeAutorization, statusCodeAutorization, setStatusCodeAutorization };
 };

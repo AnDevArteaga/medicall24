@@ -5,6 +5,10 @@ import { useNavigate } from "react-router-dom";
 import "../../../../../styles/noScroll.css";
 import PropTypes from "prop-types";
 
+import bexa from "@/assets/LogoBexa.png";
+import vidBexa from "@/assets/videoDispBexa2.mp4";
+import poster from "@/assets/playBexa.png";
+
 import { CheckCircle, ChevronRight, Info, ChevronDown } from "lucide-react";
 
 import TermCondBexaPackage from "../../../../modals/TermAndConditions/TermCondBexaPackage";
@@ -224,11 +228,11 @@ const MainContent = ({ codigosxproductos, productos }) => {
   const totalToPay = value - discountValue;
 
   const Eslogan = ({ text, value }) => (
-    <span className="flex items-center">
+    <span className="flex items-center w-full">
       <p
         className={value === 1
           ? "text-gray-700 text-xl md:text-2xl sm:text-2xl"
-          : "text-gray-700 text-sm md:text-2xl sm:text-lg"}
+          : "text-gray-700 text-lg md:text-2xl sm:text-lg"}
       >
         {text}
       </p>
@@ -259,7 +263,7 @@ const MainContent = ({ codigosxproductos, productos }) => {
         className="flex justify-start items-center w-full text-left transition-colors duration-300"
       >
         <p className="font-medium text-gray-700 text-sm md:text-xl sm:text-base">
-          Ver beneficios
+          Ver beneficios que incluye
         </p>
         <div className={`transform transition-transform duration-300 ease-in-out ${isOpen ? 'rotate-180' : 'rotate-0'}`}>
           <ChevronDown className="w-7 h-7 text-pink-600" />
@@ -329,38 +333,38 @@ const MainContent = ({ codigosxproductos, productos }) => {
     <main className="mx-auto">
       {/* Section 1: Text Left, Image Right */}
 
-      <section className="grid grid-cols-2 -mt-12 md:grid-cols-1 sm:grid-cols-1 gap-8 items-center px-24 md:px-8 sm:px-8 py-16 h-[750px] md:h-auto sm:h-auto bexa">
+      <section className="grid grid-cols-2 -mt-12 md:grid-cols-1 sm:grid-cols-1 sm:gap-8 gap-0 items-center px-32 md:px-8 sm:px-8 py-16 h-auto md:h-auto sm:h-auto bexa">
         {/* Contenido */}
-        <div className="sm:space-y-12 space-y-6 md:flex md:flex-col md:items-center sm:flex sm:flex-col">
-          <div className="space-y-2">
+        <div className="sm:space-y-6 space-y-6 md:flex md:flex-col md:items-center sm:flex sm:flex-col">
+          <div className="space-y-4 w-3/4 md:w-full sm:w-full">
+            <img src={bexa} alt="Logo BEXA" className="w-3/5" />
             {/* Título */}
-            <h2 className="text-4xl md:text-center md:text-3xl sm:text-4xl font-bold text-gray-600 leading-tight tracking-wide">
-              Examen de Tamizaje para Detectar Cáncer de Mama
-            </h2>
+            <h2 className="text-lg md:text-center md:text-3xl sm:text-2xl text-gray-700">
+            El examen de tamizaje más seguro y preciso que existe para detectar masas en la mama.       </h2>
             {/* Descripción */}
             <Eslogan
-              text="Estudio de última tecnología realizado con el dispositivo BEXA, sin dolor, sin radiación, con resultados inmediatos."
-              value={1}
+              text="Sin dolor, sin radiación y con resultados inmediatos."
+              value={2}
             />
           </div>
 
           <div className="relative bg-gray-100 hidden sm:block rounded-2xl overflow-hidden max-w-lg md:max-w-xl mx-auto shadow-lg">
             <video
               className="w-full h-auto rounded-2xl"
-              src="https://medicall24.com.co/wp-content/uploads/2024/12/bexa2.mp4"
+              src={vidBexa}
               autoPlay
               loop
               muted
+              playsInline
+              poster={poster}
             />
           </div>
-
           <div className="space-y-2">
             {/* <Accordion /> */}
             {/* Nuevos servicios */}
             <AdditionalServices />
             {/* Precio */}
             <Price price="$139.900" />
-
             {/* Botón de compra */}
             <div className="flex flex-col w-1/2 sm:w-full">
               <button
@@ -373,8 +377,8 @@ const MainContent = ({ codigosxproductos, productos }) => {
                 Comprar
               </button>
               <a href="/aliados" >
-              <button className="w-auto text-orange-500 underline text-lg hover:text-orange-600 hover:scale-105 font-semibold transition duration-300 services-bexa md:text-3xl">
-                Ver agenda
+              <button className="w-auto text-orange-500 text-lg hover:text-orange-600 hover:scale-105 font-semibold transition duration-300 services-bexa md:text-3xl">
+                Ver disponibilidad de agenda
               </button>
             </a>
             </div>
@@ -382,7 +386,7 @@ const MainContent = ({ codigosxproductos, productos }) => {
               {/* Términos y condiciones */}
               <p
                 onClick={handleOpenModalTerm}
-                className="cursor-pointer text-left sm:text-center md:text-center mt-2 text-gray-600 text-sm md:text-base underline"
+                className="cursor-pointer text-left md:text-center mt-2 text-gray-600 text-sm md:text-base underline"
               >
                 Ver Términos y Condiciones
               </p>
@@ -390,14 +394,16 @@ const MainContent = ({ codigosxproductos, productos }) => {
           </div>
         </div>
 
-        <div className="flex flex-col items-center space-y-12 ">
-          <div className="relative bg-gray-100 sm:hidden rounded-2xl overflow-hidden max-w-lg md:max-w-xl mx-auto shadow-lg">
+        <div className="w-full">
+          <div className="relative bg-gray-100 sm:hidden rounded-2xl overflow-hidden max-w-full md:max-w-xl shadow-lg">
             <video
               className="w-full h-auto rounded-2xl"
-              src="https://medicall24.com.co/wp-content/uploads/2024/12/bexa2.mp4"
+              src={vidBexa}
               autoPlay
               loop
               muted
+              playsInline
+              poster={poster}
             />
           </div>
           <div>
@@ -406,7 +412,7 @@ const MainContent = ({ codigosxproductos, productos }) => {
       </section>
       <section
         id="servicio"
-        className="grid grid-cols-2 md:grid-cols-1 sm:grid-cols-1 sm:gap-12 gap-0 items-center px-24 py-12 md:px-4 sm:px-4"
+        className="grid grid-cols-2 md:grid-cols-1 sm:grid-cols-1 sm:gap-12 gap-0 items-center px-32 py-12 md:px-4 sm:px-4"
       >
         {/* Contenedor del Video */}
         <div className="relative bg-gray-100 order-1 sm:hidden md:order-2 sm:order-2 rounded-2xl overflow-hidden max-w-lg mx-auto shadow-lg">
@@ -423,12 +429,12 @@ const MainContent = ({ codigosxproductos, productos }) => {
         <div className="sm:space-y-12 space-y-6 md:space-y-3 p-8  order-2 md:order-1 sm:order-1 bg-gray-100 rounded-lg shadow-lg transition-transform duration-300 md:flex md:flex-col md:items-center md:justify-center">
           <div className="space-y-2">
             {/* Título */}
-            <h2 className="text-4xl md:text-center sm:text-4xl font-bold text-gray-600 hover:text-pink-500 transition-colors duration-200">
+            <h2 className="text-3xl md:text-center sm:text-2xl font-bold text-gray-600 hover:text-pink-500 transition-colors duration-200">
               Paquete de Servicios Complementarios para Detectar Cáncer de Mama
             </h2>
             <Eslogan
               text="¡Recibe una atención integral y asegúrate de estar bien!"
-              value={1}
+              value={2}
             />
           </div>
 
@@ -518,7 +524,7 @@ const MainContent = ({ codigosxproductos, productos }) => {
               {/* Términos y condiciones */}
               <p
                 onClick={handleOpenModalTermPackage}
-                className="cursor-pointer text-left sm:text-center mt-2 text-gray-600 text-sm md:text-base md:text-center underline"
+                className="cursor-pointer text-left mt-2 text-gray-600 text-sm md:text-base md:text-center underline"
               >
                 Ver Términos y Condiciones
               </p>
